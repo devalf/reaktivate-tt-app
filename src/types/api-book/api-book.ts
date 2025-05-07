@@ -6,6 +6,6 @@ export type ApiBook = {
 };
 
 export type ApiAddBookParams = {
-  id: number;
-  name?: string; // TODO figure out do we really need it
+  name: string;
+  author: string;
 };

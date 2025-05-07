@@ -1,21 +1,9 @@
-import { makeAutoObservable } from 'mobx';
-import { ApiUser } from '../types';
+import { ApiUserNickname } from '../types';
 
 export class UserStore {
-  user: ApiUser | null = null;
-  isLoggedIn: boolean = false;
+  private _userNickname: ApiUserNickname = 'blackmore'; // default hardcoded value
 
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  login(userData: ApiUser) {
-    this.user = userData;
-    this.isLoggedIn = true;
-  }
-
-  logout() {
-    this.user = null;
-    this.isLoggedIn = false;
+  get userNickname(): ApiUserNickname {
+    return this._userNickname;
   }
 }

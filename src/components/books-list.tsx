@@ -7,7 +7,7 @@ export const BooksList: FC = observer(() => {
   const { booksStore } = useStore();
 
   useEffect(() => {
-    booksStore.fetchBooks('a'); // TODO provide getting  correct user name from the store
+    booksStore.fetchBooks();
   }, [booksStore]);
 
   if (booksStore.loading) {
@@ -19,12 +19,22 @@ export const BooksList: FC = observer(() => {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: 'left' }}>
+      <h3>Books:</h3>
+
       {booksStore.books.length === 0 ? (
         <div>No books found.</div>
       ) : (
         booksStore.books.map((book: ApiBook, idx) => (
-          <div key={String(book.id) + idx}>{book.name}</div>
+          <div
+            key={String(book.id) + idx}
+            style={{
+              borderBottom: idx !== booksStore.books.length - 1 ? '1px dashed' : 'none',
+              padding: '1rem 0',
+            }}
+          >
+            {book.name}
+          </div>
         ))
       )}
     </div>

@@ -1,6 +1,6 @@
 import { computed, makeAutoObservable, runInAction } from 'mobx';
 import booksRepository from '../repository/books';
-import { ApiAddBookParams, ApiBook, ApiUserNickname } from '../../src/types';
+import { ApiAddBookParams, ApiBook } from '../../src/types';
 
 import { RootStore } from './root-store';
 
@@ -23,12 +23,12 @@ export class BookStore {
     return this._books;
   }
 
-  async fetchBooks(userNickname: ApiUserNickname) {
+  async fetchBooks() {
     this.loading = true;
     this.error = null;
 
     try {
-      const books = await booksRepository.getBooks(userNickname);
+      const books = await booksRepository.getBooks(this.rootStore.userStore.userNickname);
 
       runInAction(() => {
         this._books = books || [];
@@ -42,15 +42,16 @@ export class BookStore {
     }
   }
 
-  async addBook(userNickname: ApiUserNickname, params: ApiAddBookParams) {
+  async addBook(params: ApiAddBookParams) {
     this.loading = true;
     this.error = null;
 
     try {
+      const userNickname = this.rootStore.userStore.userNickname;
       const success = await booksRepository.addBook(userNickname, params);
 
       if (success) {
-        await this.fetchBooks(userNickname);
+        await this.fetchBooks();
       } else {
         runInAction(() => {
           this.error = 'Failed to add book';
@@ -60,6 +61,30 @@ export class BookStore {
     } catch (e: any) {
       runInAction(() => {
         this.error = e.message || 'Failed to add book';
+        this.loading = false;
+      });
+    }
+  }
+
+  async resetBooks() {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      const userNickname = this.rootStore.userStore.userNickname;
+      const success = await booksRepository.resetBooks(userNickname);
+
+      if (success) {
+        await this.fetchBooks();
+      } else {
+        runInAction(() => {
+          this.error = 'Failed to reset books';
+          this.loading = false;
+        });
+      }
+    } catch (e: any) {
+      runInAction(() => {
+        this.error = e.message || 'Failed to reset books';
         this.loading = false;
       });
     }

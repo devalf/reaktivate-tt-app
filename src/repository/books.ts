@@ -10,20 +10,22 @@ class BooksRepository {
   }
 
   getBooks = async (userNickname: ApiUserNickname) => {
-    const booksDto = await this.httpGateway.get<ApiBook[]>(`/v1/books/${userNickname}`);
-
-    return booksDto;
+    return await this.httpGateway.get<ApiBook[]>(`/v1/books/${userNickname}`);
   };
 
   addBook = async (userNickname: ApiUserNickname, params: ApiAddBookParams) => {
-    const bookAddDto = await this.httpGateway.post<ApiCommonResponseStatus>(
-      `/books/${userNickname}`,
+    const response = await this.httpGateway.post<ApiCommonResponseStatus>(
+      `/v1/books/${userNickname}`,
       {
         ...params,
       }
     );
 
-    return bookAddDto && bookAddDto.status === 'ok';
+    return response && response.status === 'ok';
+  };
+
+  resetBooks = async (userNickname: ApiUserNickname) => {
+    return await this.httpGateway.put<ApiCommonResponseStatus>(`/v1/books/${userNickname}/reset`);
   };
 }
 
