@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useStore } from '../context/store-context';
 
 const hardcodedNewBookParams = {
-  name: 'Triumphal Arch',
+  name: 'Arch of Triumph',
   author: 'Erich Maria Remarque',
 };
 

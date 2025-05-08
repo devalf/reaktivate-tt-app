@@ -10,7 +10,7 @@ export const BooksList: FC = observer(() => {
     booksStore.fetchBooks();
   }, [booksStore]);
 
-  if (booksStore.loading) {
+  if (!booksStore.books.length && booksStore.loading) {
     return <div>Loading...</div>;
   }
 
@@ -20,7 +20,9 @@ export const BooksList: FC = observer(() => {
 
   return (
     <div style={{ textAlign: 'left' }}>
-      <h3>Books:</h3>
+      <h3 style={{ marginTop: 0 }}>
+        Books: {booksStore.loading && <span style={{ fontSize: '.85rem' }}>loading...</span>}
+      </h3>
 
       {booksStore.books.length === 0 ? (
         <div>No books found.</div>
