@@ -1,8 +1,6 @@
 import js from '@eslint/js';
-
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-
 import importPlugin from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
@@ -82,25 +80,21 @@ export default [
         { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
         { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
       ],
-      // TODO fix imports sorting
-      // 'import/order': [
-      //   'error',
-      //   {
-      //     groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-      //     pathGroups: [
-      //       {
-      //         pattern: './*.css',
-      //         group: 'builtin',
-      //         position: 'before',
-      //       },
-      //     ],
-      //     'newlines-between': 'always',
-      //     alphabetize: {
-      //       order: 'asc',
-      //       caseInsensitive: true,
-      //     },
-      //   },
-      // ],
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+          pathGroups: [
+            {
+              pattern: './*.css',
+              group: 'builtin',
+              position: 'before',
+            },
+          ],
+          'newlines-between': 'always',
+          pathGroupsExcludedImportTypes: ['builtin'],
+        },
+      ],
     },
   },
   {

@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
-import { useStore } from '../context/store-context';
 import { observer } from 'mobx-react-lite';
+
+import { useStore } from '../context/store-context';
 import { ApiBook } from '../types';
 
 export const BooksList: FC = observer(() => {

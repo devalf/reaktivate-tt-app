@@ -26,3 +26,10 @@ yarn
 # Start development server
 yarn dev
 ```
+
+Some sample tests are done. To run them execute
+
+```shell
+
+yarn test
+```

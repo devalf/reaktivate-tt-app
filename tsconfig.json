@@ -25,7 +25,8 @@
     "types": ["jest", "node"]
   },
   "include": [
-    "src"
+    "src",
+    "setupTests.ts"
   ],
   "references": [
     {
