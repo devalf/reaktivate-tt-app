@@ -17,14 +17,13 @@ export const App: FC = () => {
         style={{
           display: 'flex',
           flexDirection: 'row',
+          gap: '1rem',
           justifyContent: 'space-between',
           width: '100%',
         }}
       >
         <BooksList />
-        <div>
-          <BooksControl />
-        </div>
+        <BooksControl />
       </div>
     </div>
   );
