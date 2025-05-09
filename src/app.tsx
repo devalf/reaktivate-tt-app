@@ -4,7 +4,7 @@ import './app.css';
 
 import { BooksList } from './components/books-list';
 import { UserProfile } from './components/user-profile';
-import { BooksControl } from './components/add-book';
+import { BooksControl } from './components/books-control';
 
 export const App: FC = () => {
   return (
