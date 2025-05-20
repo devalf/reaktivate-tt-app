@@ -1,14 +1,10 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useStore } from '../context/store-context';
 import { observer } from 'mobx-react-lite';
 import { ApiBook } from '../types';
 
 export const BooksList: FC = observer(() => {
   const { booksStore } = useStore();
-
-  useEffect(() => {
-    booksStore.fetchBooks();
-  }, [booksStore]);
 
   if (!booksStore.books.length && booksStore.loading) {
     return <div>Loading...</div>;

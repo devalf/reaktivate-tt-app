@@ -6,7 +6,7 @@ import { ApiBook } from '../../types';
 
 jest.mock('../../context/store-context');
 
-const mockFetchBooks = jest.fn();
+const mockFetchBooks = jest.fn(() => Promise.resolve());
 
 const setupStore = ({
   books = [],
@@ -16,26 +16,22 @@ const setupStore = ({
   books?: ApiBook[];
   loading?: boolean;
   error?: string;
-}) => {
-  (useStore as jest.Mock).mockReturnValue({
+} = {}) => {
+  (useStore as jest.Mock).mockImplementation(() => ({
     booksStore: {
       books,
       loading,
       error,
       fetchBooks: mockFetchBooks,
     },
-  });
+  }));
+
+  return { fetchBooks: mockFetchBooks };
 };
 
 describe('BooksList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('calls fetchBooks on mount', () => {
-    setupStore({});
-    render(<BooksList />);
-    expect(mockFetchBooks).toHaveBeenCalled();
   });
 
   it('shows loading when loading and no books', () => {

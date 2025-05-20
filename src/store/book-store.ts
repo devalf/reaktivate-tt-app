@@ -8,13 +8,22 @@ export class BookStore {
   rootStore: RootStore;
   loading: boolean = false;
   error: string | null = null;
+  loadingPrivateBooks: boolean = false;
+  errorPrivateBooks: string | null = null;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
     makeAutoObservable(this, {
       rootStore: false,
       books: computed,
+      privateBooks: computed,
     });
+  }
+
+  private _privateBooks: ApiBook[] = [];
+
+  get privateBooks(): ApiBook[] {
+    return this._privateBooks;
   }
 
   private _books: ApiBook[] = [];
@@ -42,6 +51,29 @@ export class BookStore {
     }
   }
 
+  async fetchPrivateBooks() {
+    this.loadingPrivateBooks = true;
+    this.errorPrivateBooks = null;
+
+    try {
+      const books = await booksRepository.getPrivateBooks(this.rootStore.userStore.userNickname);
+
+      runInAction(() => {
+        this._privateBooks = books || [];
+        this.loadingPrivateBooks = false;
+      });
+    } catch (e: any) {
+      runInAction(() => {
+        this.errorPrivateBooks = e.message || 'Failed to fetch private books';
+        this.loadingPrivateBooks = false;
+      });
+    }
+  }
+
+  async fetchAllBooks() {
+    await Promise.all([this.fetchBooks(), this.fetchPrivateBooks()]);
+  }
+
   async addBook(params: ApiAddBookParams) {
     this.loading = true;
     this.error = null;
@@ -51,7 +83,7 @@ export class BookStore {
       const success = await booksRepository.addBook(userNickname, params);
 
       if (success) {
-        await this.fetchBooks();
+        await this.fetchAllBooks();
       } else {
         runInAction(() => {
           this.error = 'Failed to add book';
@@ -75,7 +107,7 @@ export class BookStore {
       const success = await booksRepository.resetBooks(userNickname);
 
       if (success) {
-        await this.fetchBooks();
+        await this.fetchAllBooks();
       } else {
         runInAction(() => {
           this.error = 'Failed to reset books';

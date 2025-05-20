@@ -1,30 +1,27 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import './app.css';
-
-import { BooksList } from './components/books-list';
 import { UserProfile } from './components/user-profile';
-import { BooksControl } from './components/add-book';
+import { useStore } from './context/store-context';
+import { StickyHeader } from './components/sticky-header';
+import { BooksContainer } from './components/books-container/books-container';
 
 export const App: FC = () => {
+  const { booksStore } = useStore();
+
+  useEffect(() => {
+    booksStore.fetchAllBooks();
+  }, [booksStore]);
+
   return (
     <div>
       <h1>Testing task. Stack: React, Mobx</h1>
 
       <UserProfile />
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '1rem',
-          justifyContent: 'space-between',
-          width: '100%',
-        }}
-      >
-        <BooksList />
-        <BooksControl />
-      </div>
+      <StickyHeader />
+
+      <BooksContainer />
     </div>
   );
 };
