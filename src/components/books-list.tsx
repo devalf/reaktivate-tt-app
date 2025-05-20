@@ -1,33 +1,35 @@
 import React, { FC } from 'react';
-import { useStore } from '../context/store-context';
-import { observer } from 'mobx-react-lite';
 import { ApiBook } from '../types';
 
-export const BooksList: FC = observer(() => {
-  const { booksStore } = useStore();
+type BooksListProps = {
+  books: ApiBook[];
+  loading: boolean;
+  error: string | null;
+};
 
-  if (!booksStore.books.length && booksStore.loading) {
+export const BooksList: FC<BooksListProps> = ({ books, loading, error }) => {
+  if (!books.length && loading) {
     return <div>Loading...</div>;
   }
 
-  if (booksStore.error) {
-    return <div>Error: {booksStore.error}</div>;
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
     <div style={{ textAlign: 'left' }}>
       <h3 style={{ marginTop: 0 }}>
-        Books: {booksStore.loading && <span style={{ fontSize: '.85rem' }}>loading...</span>}
+        Books: {loading && <span style={{ fontSize: '.85rem' }}>loading...</span>}
       </h3>
 
-      {booksStore.books.length === 0 ? (
+      {books.length === 0 ? (
         <div>No books found.</div>
       ) : (
-        booksStore.books.map((book: ApiBook, idx) => (
+        books.map((book: ApiBook, idx) => (
           <div
             key={String(book.id) + idx}
             style={{
-              borderBottom: idx !== booksStore.books.length - 1 ? '1px dashed' : 'none',
+              borderBottom: idx !== books.length - 1 ? '1px dashed' : 'none',
               padding: '1rem 0',
             }}
           >
@@ -37,4 +39,4 @@ export const BooksList: FC = observer(() => {
       )}
     </div>
   );
-});
+};

@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { BooksList } from '../books-list';
 import { BooksControl } from '../add-book';
 import { useBooksContainer } from './use-books-container';
 import { PrivateBooksList } from '../private-books-list';
+import { PublicBooksList } from '../public-books-list';
 
 export const BooksContainer: FC = () => {
   const { activeTab, tabs, handleTabChange } = useBooksContainer();
@@ -38,7 +38,7 @@ export const BooksContainer: FC = () => {
             marginTop: '2rem',
           }}
         >
-          <BooksList />
+          <PublicBooksList />
           <BooksControl />
         </div>
       )}
