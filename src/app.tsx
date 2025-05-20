@@ -14,7 +14,7 @@ export const App: FC = () => {
   }, [booksStore]);
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       <h1>Testing task. Stack: React, Mobx</h1>
 
       <UserProfile />

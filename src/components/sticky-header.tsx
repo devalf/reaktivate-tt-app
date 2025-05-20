@@ -14,6 +14,15 @@ export const StickyHeader: FC = observer(() => {
   }
 
   return (
-    <div style={{ textAlign: 'left' }}>Private books count: {booksStore.privateBooks.length}</div>
+    <div
+      style={{
+        textAlign: 'left',
+        position: 'sticky',
+        top: 0,
+        background: '#242424',
+      }}
+    >
+      Private books count: {booksStore.privateBooks.length}
+    </div>
   );
 });
