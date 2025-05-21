@@ -2,8 +2,6 @@ import React, { FC } from 'react';
 
 import { ApiBook } from '../types';
 
-
-
 type BooksListProps = {
   books: ApiBook[];
   loading: boolean;

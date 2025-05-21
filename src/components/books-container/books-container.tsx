@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import { BooksControl } from '../add-book';
-import { useBooksContainer } from './use-books-container';
+
+import { BooksControl } from '../books-control';
 import { PrivateBooksList } from '../private-books-list';
 import { PublicBooksList } from '../public-books-list';
+
+import { useBooksContainer } from './use-books-container';
 
 export const BooksContainer: FC = () => {
   const { activeTab, tabs, handleTabChange } = useBooksContainer();

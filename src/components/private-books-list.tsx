@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../context/store-context';
+
 import { BooksList } from './books-list';
 
 export const PrivateBooksList: FC = observer(() => {

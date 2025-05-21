@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { useStore } from '../context/store-context';
 import { observer } from 'mobx-react-lite';
+
+import { useStore } from '../context/store-context';
 
 export const StickyHeader: FC = observer(() => {
   const { booksStore } = useStore();
