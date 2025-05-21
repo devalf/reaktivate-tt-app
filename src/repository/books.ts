@@ -27,6 +27,10 @@ class BooksRepository {
   resetBooks = async (userNickname: ApiUserNickname) => {
     return await this.httpGateway.put<ApiCommonResponseStatus>(`/v1/books/${userNickname}/reset`);
   };
+
+  getPrivateBooks = async (userNickname: ApiUserNickname) => {
+    return await this.httpGateway.get<ApiBook[]>(`/v1/books/${userNickname}/private`);
+  };
 }
 
 const booksRepository = new BooksRepository();
